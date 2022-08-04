@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { RefreshIcon } from "../components/Icons";
 import { usePokemons } from "../contexts/PokemonContext";
 
 const PokemonPage = () => {
@@ -8,6 +8,7 @@ const PokemonPage = () => {
   const { name } = useParams();
 
   const [pokemon, setPokemon] = useState();
+  const [isFrontImage, setIsFrontImage] = useState(true);
 
   const handleGetPokemon = async () => {
     const data = await getPokemon(name);
@@ -21,9 +22,19 @@ const PokemonPage = () => {
   return (
     <div className="space-y-8">
       <section className="flex flex-col sm:flex-row border rounded-md">
-        <div className="flex items-center justify-center border-b sm:border-b-0 sm:border-r w-full sm:w-1/3 py-4 px-8">
+        <div className="flex items-center justify-center border-b sm:border-b-0 sm:border-r w-full sm:w-1/3 py-4 px-8 relative">
+          <button
+            onClick={() => setIsFrontImage((prev) => !prev)}
+            className="absolute top-3 right-3 bg-slate-100 p-2 rounded-md hover:scale-105 transition-all"
+          >
+            <RefreshIcon />
+          </button>
           <img
-            src={pokemon?.sprites.front_default}
+            src={
+              isFrontImage
+                ? pokemon?.sprites.front_default
+                : pokemon?.sprites.back_default
+            }
             alt={pokemon?.name}
             className="w-52"
           />
@@ -48,7 +59,9 @@ const PokemonPage = () => {
               <h3 className="font-bold mb-4">Abilities</h3>
               <div className="space-y-2 rounded-md">
                 {pokemon?.abilities.map((ability, i) => (
-                  <p key={i} className="capitalize">{ability.ability.name}</p>
+                  <p key={i} className="capitalize">
+                    {ability.ability.name}
+                  </p>
                 ))}
               </div>
             </div>

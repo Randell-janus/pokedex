@@ -7,16 +7,16 @@ import PokemonPage from "./pages/PokemonPage";
 
 function App() {
   return (
-    <Layout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Layout>
         <PokemonProvider>
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/pokemon/:name" element={<PokemonPage />} />
           </Routes>
         </PokemonProvider>
-      </BrowserRouter>
-    </Layout>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
