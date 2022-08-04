@@ -8,7 +8,7 @@ export const usePokemons = () => {
 
 export const PokemonProvider = ({ children }) => {
   const [pokemons, setPokemons] = useState([]);
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=3");
+  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=10");
 
   const getPokemon = async (name) => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
