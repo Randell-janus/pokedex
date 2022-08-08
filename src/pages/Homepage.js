@@ -1,28 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
+import { FooterLayout } from "../components/Layouts";
 import PokemonCard from "../components/PokemonCard";
 
-import { usePokemons } from "../contexts/PokemonContext";
+import { usePokemons } from "../utils/context";
 
 const Homepage = () => {
   const { getPokemons, pokemons } = usePokemons();
 
   return (
-    <div>
-      <main className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 sm:gap-x-6 sm:gap-y-8 border-b pb-7 mb-7">
+    <>
+      <main className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 sm:gap-x-6 sm:gap-y-8 border-b pb-8">
         {pokemons?.map((pokemon, i) => (
           <PokemonCard key={i} pokemon={pokemon} />
         ))}
       </main>
-      <footer className="flex justify-end">
-        <button
-          className="px-5 py-2 bg-slate-100 rounded-md hover:scale-105 transition-all active:scale-95"
-          onClick={getPokemons}
-        >
+
+      <FooterLayout>
+        <button className="btn-primary-slate" onClick={getPokemons}>
           Load more pokemons...
         </button>
-      </footer>
-    </div>
+      </FooterLayout>
+    </>
   );
 };
 

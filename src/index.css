@@ -3,18 +3,25 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-      @apply text-xs sm:text-lg;
-      @apply font-mono;
-    }
-  
-    h1 {
-      @apply text-4xl sm:text-6xl;
-    }
-    h2 {
-      @apply text-2xl sm:text-3xl;
-    }
-    h3 {
-      @apply text-lg sm:text-xl;
-    }
+  body {
+    @apply text-xs sm:text-lg;
+    @apply font-mono text-slate-800;
   }
+
+  h1 {
+    @apply text-4xl sm:text-6xl;
+  }
+  h2 {
+    @apply text-2xl sm:text-3xl;
+  }
+  h3 {
+    @apply text-lg sm:text-xl;
+  }
+}
+
+@layer components {
+  .btn-primary-slate {
+    @apply px-5 py-2 bg-slate-100 rounded-md;
+    @apply hover:scale-110 transition-all active:scale-95;
+  }
+}

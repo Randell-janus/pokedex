@@ -1,21 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
 
-import { PokemonProvider } from "./contexts/PokemonContext";
+import { PageLayout } from "./components/Layouts";
+import { PokemonProvider } from "./utils/context"
+
 import Homepage from "./pages/Homepage";
 import PokemonPage from "./pages/PokemonPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <Layout>
+      <PageLayout>
         <PokemonProvider>
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/pokemon/:name" element={<PokemonPage />} />
           </Routes>
         </PokemonProvider>
-      </Layout>
+      </PageLayout>
     </BrowserRouter>
   );
 }

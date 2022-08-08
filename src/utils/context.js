@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
+import { fetcher } from "./helpers";
+import { ENDPOINTS } from "./constants";
 
 const PokemonContext = createContext();
 
@@ -8,24 +10,24 @@ export const usePokemons = () => {
 
 export const PokemonProvider = ({ children }) => {
   const [pokemons, setPokemons] = useState([]);
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=10");
-
-  const getPokemon = async (name) => {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    const data = await res.json();
-    return data;
-  };
+  const [url, setUrl] = useState(ENDPOINTS.POKEMONS);
 
   const getPokemons = async () => {
     const res = await fetch(url);
     const data = await res.json();
 
     data.results.forEach(async (pokemon) => {
-      const data = await getPokemon(pokemon.name);
+      const pokemonProfile = await fetcher(ENDPOINTS.POKEMON, pokemon.name);
+      // const pokemonSpecies = await getSpecies(pokemon.name);
+      // const evolutionID = formatEvolutionID(pokemonSpecies);
 
-      setPokemons((prev) => [...prev, data]);
+      // setPokemons((prev) => [
+      //   ...prev,
+      //   { ...pokemonProfile, ...pokemonSpecies },
+      // ]);
+      setPokemons((prev) => [...prev, pokemonProfile]);
     });
-
+    pokemons.sort((a, b) => a.id - b.id);
     setUrl(data.next);
   };
 
@@ -33,7 +35,7 @@ export const PokemonProvider = ({ children }) => {
     getPokemons();
   }, []);
 
-  const value = { getPokemon, getPokemons, pokemons };
+  const value = { getPokemons, pokemons };
 
   return (
     <PokemonContext.Provider value={value}>{children}</PokemonContext.Provider>
