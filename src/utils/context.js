@@ -11,7 +11,6 @@ export const usePokemons = () => {
 export const PokemonProvider = ({ children }) => {
   const [pokemons, setPokemons] = useState([]);
   const [pokemon, setPokemon] = useState();
-  const [evolutions, setEvolutions] = useState([]);
 
   const [url, setUrl] = useState(ENDPOINTS.POKEMONS);
 
@@ -41,8 +40,8 @@ export const PokemonProvider = ({ children }) => {
   const value = {
     pokemons,
     pokemon,
-    evolutions,
-    setEvolutions,
+    // evolutions,
+    // setEvolutions,
     setPokemon,
     getPokemons,
   };

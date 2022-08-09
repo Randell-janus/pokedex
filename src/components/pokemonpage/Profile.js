@@ -7,7 +7,7 @@ const Profile = () => {
   const { pokemon } = usePokemons();
 
   return (
-    <section className="p-12 space-y-8 flex flex-col border rounded-md">
+    <section className="p-12 space-y-8 border rounded-md">
       <DataContainer>
         <DataLayout label="Height">{pokemon?.height * 10} cm</DataLayout>
         <DataLayout label="Weight">{pokemon?.weight * 0.22} lbs</DataLayout>

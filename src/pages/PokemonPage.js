@@ -10,12 +10,14 @@ import { usePokemons } from "../utils/context";
 import Profile from "../components/pokemonpage/Profile";
 
 const PokemonPage = () => {
-  const { pokemon, setPokemon, evolutions, setEvolutions } = usePokemons();
+  const { pokemon, setPokemon } = usePokemons();
   const { name } = useParams();
   const navigate = useNavigate();
 
+  const [evolutions, setEvolutions] = useState([]);
+
   const handlePokemonChange = (data) => {
-    setPokemon(data);
+    // setPokemon(data);
     navigate(`/pokemon/${data.name}`);
   };
 
@@ -37,14 +39,13 @@ const PokemonPage = () => {
     const third = evolutionObj?.chain.evolves_to[0]?.evolves_to[0];
 
     evolutions.push(first);
+    if (second !== undefined) evolutions.push(second?.species?.name);
+    if (third !== undefined) evolutions.push(third?.species?.name);
 
-    if (second?.length < 1) return;
-    evolutions.push(second?.species?.name);
-
-    if (third?.length < 1) return;
-    evolutions.push(third?.species?.name);
-
-    setEvolutions(evolutions);
+    evolutions.forEach(async (pokemon) => {
+      const pokemonProfile = await fetcher(ENDPOINTS.POKEMON, pokemon);
+      setEvolutions((prev) => [...prev, pokemonProfile]);
+    });
   };
 
   const getPokemon = async () => {
@@ -53,13 +54,13 @@ const PokemonPage = () => {
     const evolutionID = formatEvolutionID(pokemonSpecies);
     const evolutionObj = await fetcher(ENDPOINTS.EVOLUTION, evolutionID);
 
-    setPokemon({ ...pokemonProfile, ...pokemonSpecies });
     getEvolutions(evolutionObj);
+    setPokemon({ ...pokemonProfile, ...pokemonSpecies });
   };
 
   useEffect(() => {
     getPokemon();
-  }, [pokemon]);
+  }, []);
 
   return (
     <>
@@ -71,13 +72,19 @@ const PokemonPage = () => {
 
           <section className="border rounded-md p-12 flex items-center justify-center flex-1">
             {evolutions?.map((ev, i) => (
-              <div key={i}>{ev}</div>
+              <div key={i}>
+                <img
+                  src={ev.sprites.front_default}
+                  alt={ev.name}
+                  className="w-40"
+                />
+              </div>
             ))}
           </section>
         </div>
       </main>
 
-      <FooterLayout>
+      {/* <FooterLayout>
         <div className="flex space-x-4">
           {pokemon?.id > 1 && (
             <button className="btn-primary-slate" onClick={getPrevPokemon}>
@@ -90,7 +97,7 @@ const PokemonPage = () => {
             </button>
           )}
         </div>
-      </FooterLayout>
+      </FooterLayout> */}
     </>
   );
 };

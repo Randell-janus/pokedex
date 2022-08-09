@@ -21,7 +21,7 @@ export const STATS = {
 };
 
 export const ENDPOINTS = {
-  POKEMONS: "https://pokeapi.co/api/v2/pokemon?limit=3",
+  POKEMONS: "https://pokeapi.co/api/v2/pokemon?limit=10",
   POKEMON: "https://pokeapi.co/api/v2/pokemon/",
   SPECIES: "https://pokeapi.co/api/v2/pokemon-species/",
   EVOLUTION: "https://pokeapi.co/api/v2/evolution-chain/",
