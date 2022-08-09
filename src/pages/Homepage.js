@@ -11,9 +11,11 @@ const Homepage = () => {
   return (
     <>
       <main className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-4 sm:gap-x-6 sm:gap-y-8 border-b pb-8">
-        {pokemons?.map((pokemon, i) => (
-          <PokemonCard key={i} pokemon={pokemon} />
-        ))}
+        {pokemons
+          ?.sort((a, b) => a.id - b.id)
+          .map((pokemon, i) => (
+            <PokemonCard key={i} pokemon={pokemon} />
+          ))}
       </main>
 
       <FooterLayout>

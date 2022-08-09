@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import { formatEvolutionID, fetcher } from "../utils/helpers";
 import { ENDPOINTS } from "../utils/constants";
@@ -8,15 +8,14 @@ import { FooterLayout } from "../components/Layouts";
 import Stats from "../components/pokemonpage/Stats";
 import { usePokemons } from "../utils/context";
 import Profile from "../components/pokemonpage/Profile";
+import Evolutions from "../components/pokemonpage/Evolutions";
 
 const PokemonPage = () => {
-  const { pokemon, setPokemon } = usePokemons();
+  const { pokemon, setPokemon, setEvolutions } = usePokemons();
   const { name } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [evolutions, setEvolutions] = useState([]);
 
   const getPrevPokemon = async () => {
     const data = await fetcher(ENDPOINTS.POKEMON, pokemon.id - 1);
@@ -67,26 +66,7 @@ const PokemonPage = () => {
 
         <div className="flex-1 flex flex-col space-y-8">
           <Profile />
-
-          <section className="border rounded-md p-12 h-full space-y-8">
-            <h3 className="capitalize font-bold w-full text-center md:text-start">
-              Evolutions
-            </h3>
-            <div className="flex flex-col md:flex-row space-x-0 md:space-x-2 space-y-6 md:space-y-0 items-center justify-center">
-              {evolutions?.map((ev, i) => (
-                <Link to={`/pokemon/${ev.name}`} key={i} className="space-y-2">
-                  <div className="bg-slate-100 rounded-md hover:bg-slate-200 transition-all p-4 w-max md:w-full">
-                    <img
-                      src={ev.sprites.front_default}
-                      alt={ev.name}
-                      className="w-40"
-                    />
-                  </div>
-                  <p className="text-center capitalize">{ev.name}</p>
-                </Link>
-              ))}
-            </div>
-          </section>
+          <Evolutions />
         </div>
       </main>
 
