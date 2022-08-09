@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { FooterLayout } from "../components/Layouts";
-import PokemonCard from "../components/PokemonCard";
+import PokemonCard from "../components/homepage/PokemonCard";
 
 import { usePokemons } from "../utils/context";
 

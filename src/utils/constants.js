@@ -11,6 +11,15 @@ export const SPECIES_COLORS = {
   yellow: "bg-orange-300",
 };
 
+export const STATS = {
+  hp: "HP",
+  attack: "ATK",
+  defense: "DEF",
+  "special-attack": "SP-ATK",
+  "special-defense": "SP-DEF",
+  speed: "SPD",
+};
+
 export const ENDPOINTS = {
   POKEMONS: "https://pokeapi.co/api/v2/pokemon?limit=3",
   POKEMON: "https://pokeapi.co/api/v2/pokemon/",
