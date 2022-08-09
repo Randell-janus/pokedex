@@ -19,8 +19,8 @@ export const FooterLayout = ({ children }) => {
 export const DataLayout = ({ children, label }) => {
   return (
     <div className="space-y-2 w-1/2">
-      <h3 className="font-bold mb-4">{label}</h3>
-      <div className="space-y-1 rounded-md">{children}</div>
+      <h4 className="font-bold mb-4">{label}</h4>
+      <div className="space-y-1">{children}</div>
     </div>
   );
 };

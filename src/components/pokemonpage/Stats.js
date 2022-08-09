@@ -29,7 +29,7 @@ const Stats = () => {
       </div>
 
       <div className="px-12 pb-12 rounded-md space-y-4">
-        <h2 className="capitalize tracking-wider font-bold text-center">
+        <h2 className="tracking-wider font-bold text-center uppercase">
           {pokemon?.name}
         </h2>
         <h3 className="font-bold">Stats</h3>

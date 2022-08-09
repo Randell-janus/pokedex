@@ -8,6 +8,7 @@ const Profile = () => {
 
   return (
     <section className="p-12 space-y-8 border rounded-md">
+      <h3 className="capitalize font-bold">Profile</h3>
       <DataContainer>
         <DataLayout label="Height">{pokemon?.height * 10} cm</DataLayout>
         <DataLayout label="Weight">{pokemon?.weight * 0.22} lbs</DataLayout>

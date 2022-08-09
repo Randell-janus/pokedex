@@ -17,6 +17,9 @@
   h3 {
     @apply text-lg sm:text-xl;
   }
+  h4 {
+    @apply text-base sm:text-lg;
+  }
 }
 
 @layer components {

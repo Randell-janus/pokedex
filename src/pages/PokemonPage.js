@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 
 import { formatEvolutionID, fetcher } from "../utils/helpers";
 import { ENDPOINTS } from "../utils/constants";
@@ -12,23 +12,20 @@ import Profile from "../components/pokemonpage/Profile";
 const PokemonPage = () => {
   const { pokemon, setPokemon } = usePokemons();
   const { name } = useParams();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [evolutions, setEvolutions] = useState([]);
 
-  const handlePokemonChange = (data) => {
-    // setPokemon(data);
-    navigate(`/pokemon/${data.name}`);
-  };
-
   const getPrevPokemon = async () => {
     const data = await fetcher(ENDPOINTS.POKEMON, pokemon.id - 1);
-    handlePokemonChange(data);
+    navigate(`/pokemon/${data.name}`);
   };
 
   const getNextPokemon = async () => {
     const data = await fetcher(ENDPOINTS.POKEMON, pokemon.id + 1);
-    handlePokemonChange(data);
+    navigate(`/pokemon/${data.name}`);
   };
 
   const getEvolutions = (evolutionObj) => {
@@ -49,6 +46,7 @@ const PokemonPage = () => {
   };
 
   const getPokemon = async () => {
+    setEvolutions([]);
     const pokemonProfile = await fetcher(ENDPOINTS.POKEMON, name);
     const pokemonSpecies = await fetcher(ENDPOINTS.SPECIES, name);
     const evolutionID = formatEvolutionID(pokemonSpecies);
@@ -60,7 +58,7 @@ const PokemonPage = () => {
 
   useEffect(() => {
     getPokemon();
-  }, []);
+  }, [location]);
 
   return (
     <>
@@ -70,21 +68,29 @@ const PokemonPage = () => {
         <div className="flex-1 flex flex-col space-y-8">
           <Profile />
 
-          <section className="border rounded-md p-12 flex items-center justify-center flex-1">
-            {evolutions?.map((ev, i) => (
-              <div key={i}>
-                <img
-                  src={ev.sprites.front_default}
-                  alt={ev.name}
-                  className="w-40"
-                />
-              </div>
-            ))}
+          <section className="border rounded-md p-12 h-full space-y-8">
+            <h3 className="capitalize font-bold w-full text-center md:text-start">
+              Evolutions
+            </h3>
+            <div className="flex flex-col md:flex-row space-x-0 md:space-x-2 space-y-6 md:space-y-0 items-center justify-center">
+              {evolutions?.map((ev, i) => (
+                <Link to={`/pokemon/${ev.name}`} key={i} className="space-y-2">
+                  <div className="bg-slate-100 rounded-md hover:bg-slate-200 transition-all p-4 w-max md:w-full">
+                    <img
+                      src={ev.sprites.front_default}
+                      alt={ev.name}
+                      className="w-40"
+                    />
+                  </div>
+                  <p className="text-center capitalize">{ev.name}</p>
+                </Link>
+              ))}
+            </div>
           </section>
         </div>
       </main>
 
-      {/* <FooterLayout>
+      <FooterLayout>
         <div className="flex space-x-4">
           {pokemon?.id > 1 && (
             <button className="btn-primary-slate" onClick={getPrevPokemon}>
@@ -97,7 +103,7 @@ const PokemonPage = () => {
             </button>
           )}
         </div>
-      </FooterLayout> */}
+      </FooterLayout>
     </>
   );
 };
