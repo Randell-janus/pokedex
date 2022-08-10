@@ -10,7 +10,8 @@ export const PageLayout = ({ children }) => {
     setSearchTerm(target.toLowerCase());
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault()
     navigate(`/pokemon/${searchTerm.toLocaleLowerCase()}`);
   };
 
